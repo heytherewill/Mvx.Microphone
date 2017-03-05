@@ -16,21 +16,22 @@ namespace Client.iOS.Views
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UILabel Label { get; set; }
+        UIKit.UIButton Button { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UITextField TextField { get; set; }
+        UIKit.UILabel Label { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
+            if (Button != null) {
+                Button.Dispose ();
+                Button = null;
+            }
+
             if (Label != null) {
                 Label.Dispose ();
                 Label = null;
-            }
-            if (TextField != null) {
-                TextField.Dispose ();
-                TextField = null;
             }
         }
     }

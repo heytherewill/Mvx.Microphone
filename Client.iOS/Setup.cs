@@ -1,6 +1,9 @@
+using Microphone;
+using Microphone.iOS;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
 using MvvmCross.iOS.Views.Presenters;
+using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
 using UIKit;
 
@@ -27,5 +30,12 @@ namespace Client.iOS
         {
             return new DebugTrace();
         }
+
+		protected override void InitializeLastChance()
+		{
+			Mvx.RegisterSingleton<IMvxMicrophoneService>(new MvxMicrophoneService());
+
+			base.InitializeLastChance();
+		}
     }
 }

@@ -14,8 +14,10 @@ namespace Client.iOS.Views
             base.ViewDidLoad();
 
             var set = this.CreateBindingSet<FirstView, Core.ViewModels.FirstViewModel>();
-            set.Bind(Label).To(vm => vm.Hello);
-            set.Bind(TextField).To(vm => vm.Hello);
+          
+			set.Bind(Label).To(vm => vm.Path);
+			set.Bind(Button).For("Text").To(vm => vm.ToggleRecordingCommand);
+			set.Bind(Button).To(vm => vm.ToggleRecordingCommand);
             set.Apply();
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using AVFoundation;
+﻿using AVFoundation;
 using Foundation;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;

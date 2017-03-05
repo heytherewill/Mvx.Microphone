@@ -1,13 +1,45 @@
-﻿namespace Microphone
+﻿using MvvmCross.Platform;
+using MvvmCross.Platform.Platform;
+
+namespace Microphone
 {
-	public interface IMvxMicrophoneService
+	public abstract class BaseMvxMicrophoneService : IMvxMicrophoneService
 	{
-		bool CanRecord { get; }
+		public bool CanRecord => NativeCanRecord;
 
-		bool IsRecording { get; }
+		public bool IsRecording { get; set; }
 
-		bool StartRecording(string destination);
+		public RecordingResult StartRecording(string fileName)
+		{
+			if (!CanRecord) return LogAndFail("Device does not support recording");
+			if (IsRecording) return LogAndFail("Tried to start recording while microphone was already in use");
 
-		bool StopRecording();
+			var recordingResult = NativeStartRecording(fileName);
+			IsRecording = recordingResult.Success;
+
+			return recordingResult;                      
+		}
+
+		public bool StopRecording()
+		{
+			if (!CanRecord) return LogAndFail("Device does not support recording");
+			if (!IsRecording) return LogAndFail("Tried to stop recording while microphone was not being used");
+
+			IsRecording = !NativeStopRecording();
+
+			return !IsRecording;
+		}
+
+		private bool LogAndFail(string message)
+		{
+			Mvx.Trace(MvxTraceLevel.Error, message);
+			return false;
+		}
+
+		protected abstract bool NativeCanRecord { get; }
+
+		protected abstract RecordingResult NativeStartRecording(string fileName);
+
+		protected abstract bool NativeStopRecording();
 	}
 }
